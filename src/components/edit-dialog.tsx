@@ -1,33 +1,25 @@
-import { useState } from "react";
+import { SubTask, Task } from "@/types";
 import useTodoStore from "../stores/useTodoStore";
-
+import Subtask from "./subtask";
+import { Button } from "./ui/button";
 import {
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogFooter,
-} from "./ui/alert-dialog";
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogTrigger,
+} from "./ui/dialog";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { Button } from "./ui/button";
-import Subtask from "./subtask";
+import { useState } from "react";
+import { SquarePen } from "lucide-react";
 
-var fechaActual = new Date();
+export default function EditDialog({ task }: { task: Task }) {
+  const { updateTask } = useTodoStore();
 
-// Obtiene el año, mes y día
-var año = fechaActual.getFullYear();
-var mes = ("0" + (fechaActual.getMonth() + 1)).slice(-2); // Suma 1 al mes, ya que los meses se indexan desde 0
-var dia = ("0" + fechaActual.getDate()).slice(-2);
-
-// Formatea la fecha en "yyyy/mm/dd"
-var fechaFormateada = año + "-" + mes + "-" + dia;
-
-export default function AddForm() {
-  const { taskList, addTask } = useTodoStore();
-
-  const [title, setTitle] = useState<string>("");
-  const [subTasks] = useState<any>([]);
-  const [deadline, setDeadline] = useState<string>(fechaFormateada);
+  const [title, setTitle] = useState<string>(task.title);
+  const [subTasks] = useState<SubTask[]>(task.subtasks);
+  const [deadline, setDeadline] = useState<string>(task.deadline);
 
   const [subtask, setSubtask] = useState<string>("");
 
@@ -54,24 +46,27 @@ export default function AddForm() {
   }
 
   function handleSubmit() {
-    if (!deadline) return;
-    if (subTasks.length < 1) return;
-
     const newTask = {
-      id: taskList.length === 0 ? 1 : taskList.length + 1,
+      id: task.id,
       title,
       state: "todo" as const,
       deadline,
       subtasks: subTasks,
     };
 
-    addTask(newTask);
+    updateTask(task.id, newTask);
   }
 
   return (
-    <form>
-      <AlertDialogContent>
-        <h3>Crear tarea</h3>
+    <Dialog>
+      <DialogTrigger asChild>
+        <SquarePen
+          data-testid="edit"
+          className="hover:text-orange-400 cursor-pointer h-5"
+        />
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <h3>Editar tarea</h3>
         <Label htmlFor="title">Título</Label>
         <Input
           id="title"
@@ -79,10 +74,9 @@ export default function AddForm() {
           type="text"
           onChange={handleChangeTitle}
           value={title}
-          required
         />
         <div className="w-full my-3 min-h-16 bg-zinc-100 rounded p-3">
-          {subTasks?.map((t: any, i: number) => {
+          {subTasks?.map((t: SubTask, i: number) => {
             return <Subtask key={i} content={t.content} />;
           })}
         </div>
@@ -100,19 +94,19 @@ export default function AddForm() {
         <div>
           Deadline:{" "}
           <input
+            value={deadline?.toString()}
             type="date"
             data-testid="calendar"
             onChange={handleChangeDate}
-            value={deadline}
-            required
           />
         </div>
 
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancelar</AlertDialogCancel>
-          <AlertDialogAction onClick={handleSubmit}>Agregar</AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </form>
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button onClick={handleSubmit}>Confirmar</Button>
+          </DialogClose>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }
