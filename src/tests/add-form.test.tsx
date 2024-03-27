@@ -3,6 +3,12 @@ import { render, fireEvent } from "@testing-library/react";
 import App from "../App";
 import moment from "moment";
 
+global.ResizeObserver = jest.fn().mockImplementation(() => ({
+  observe: jest.fn(),
+  unobserve: jest.fn(),
+  disconnect: jest.fn(),
+}));
+
 describe("App cruds", () => {
   test("Add subtask to task form", () => {
     const { getByText, getByPlaceholderText, getAllByTestId } = render(<App />);

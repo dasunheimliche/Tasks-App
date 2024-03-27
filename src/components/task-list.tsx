@@ -1,13 +1,8 @@
 // import Task from "./task";
 import { Task } from "@/types";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "./ui/accordion";
+import { Accordion } from "./ui/accordion";
 import { ScrollArea } from "./ui/scroll-area";
-import TaskCard from "./task";
+import TaskCard from "./task-card";
 
 import moment from "moment";
 
@@ -29,28 +24,7 @@ export default function TaskList({ tasks, state }: { tasks: any; state: any }) {
         {tasks.map((task: Task, i: number) => {
           if (task.state !== state) return;
 
-          return (
-            <AccordionItem
-              key={i}
-              value={`item-${i}`}
-              className="task max-w-full border border-zinc-300 rounded-md mb-2 hover:bg-[#F0FBF7]"
-            >
-              <AccordionTrigger className="font-bold text-zinc-700">
-                <div
-                  className="flex justify-between w-full px-4"
-                  data-testid="task-card"
-                >
-                  <h3 data-testid="task-title">{task.title}</h3>
-                  <div data-testid="deadline">
-                    {moment(task.deadline).format("LL")}
-                  </div>
-                </div>
-              </AccordionTrigger>
-              <AccordionContent data-testid="open-task-card">
-                <TaskCard task={task} />
-              </AccordionContent>
-            </AccordionItem>
-          );
+          return <TaskCard task={task} key={i} />;
         })}
       </Accordion>
     </ScrollArea>

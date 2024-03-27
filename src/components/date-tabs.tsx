@@ -2,7 +2,7 @@ import { Button } from "./ui/button";
 
 export default function DateTabs() {
   return (
-    <ul className="flex justify-end items-center gap-3 h-14 px-5">
+    <ul className="flex justify-end items-center gap-3 h-16 px-5">
       <li>
         <TabButton label="Hoy" />
       </li>

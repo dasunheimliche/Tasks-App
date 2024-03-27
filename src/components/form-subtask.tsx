@@ -1,7 +1,7 @@
 import { Checkbox } from "./ui/checkbox";
 import { Separator } from "./ui/separator";
 
-export default function Subtask({ content }: { content: string }) {
+export default function FormSubtask({ content }: { content: string }) {
   return (
     <>
       <div className="flex items-center space-x-2" data-testid="subtask">

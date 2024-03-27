@@ -1,14 +1,12 @@
-import { SquareCheckBig } from "lucide-react";
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "./ui/alert-dialog";
+
+import Modal from "./ui/modal";
+import ModalClose from "./ui/modal-close";
+import ModalConfirm from "./ui/modal-confirm";
 
 export default function DoneAlertDialog({
   onClick,
@@ -16,22 +14,14 @@ export default function DoneAlertDialog({
   onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }) {
   return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <SquareCheckBig
-          data-testid="done"
-          className="hover:text-emerald-600 cursor-pointer h-5"
-        />
-      </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Estas seguro/a?</AlertDialogTitle>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancelar</AlertDialogCancel>
-          <AlertDialogAction onClick={onClick}>Confirmar</AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+    <Modal>
+      <AlertDialogHeader>
+        <AlertDialogTitle>Estas seguro/a?</AlertDialogTitle>
+      </AlertDialogHeader>
+      <AlertDialogFooter>
+        <ModalClose />
+        <ModalConfirm onClick={onClick} />
+      </AlertDialogFooter>
+    </Modal>
   );
 }

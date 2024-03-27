@@ -2,10 +2,7 @@
   "name": "sarai",
   "jest": {
     "preset": "ts-jest",
-    "testEnvironment": "jsdom",
-    "collectCoverageFrom": [
-      "!src/components/ui/*.tsx"
-    ]
+    "testEnvironment": "jsdom"
   },
   "private": true,
   "version": "0.0.0",
@@ -29,6 +26,7 @@
     "@radix-ui/react-scroll-area": "^1.0.5",
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-toast": "^1.1.5",
     "@types/moment": "^2.13.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
