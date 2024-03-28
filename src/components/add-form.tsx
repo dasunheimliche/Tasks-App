@@ -4,25 +4,23 @@ import useTodoStore from "../stores/useTodoStore";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 
-import { Checkbox } from "./ui/checkbox";
-import { Separator } from "./ui/separator";
-
 import Modal from "./ui/modal";
 import ModalClose from "./ui/modal-close";
-import ModalConfirm from "./ui/modal-confirm";
 import FormLabel from "./ui/form-label";
 import FormSubtask from "./form-subtask";
 import InputGroup from "./ui/input-group";
+import ModalAccept from "./ui/modal-accept";
+import { SubTask } from "@/types";
 
-var fechaActual = new Date();
+const fechaActual = new Date();
 
 // Obtiene el año, mes y día
-var año = fechaActual.getFullYear();
-var mes = ("0" + (fechaActual.getMonth() + 1)).slice(-2); // Suma 1 al mes, ya que los meses se indexan desde 0
-var dia = ("0" + fechaActual.getDate()).slice(-2);
+const año = fechaActual.getFullYear();
+const mes = ("0" + (fechaActual.getMonth() + 1)).slice(-2); // Suma 1 al mes, ya que los meses se indexan desde 0
+const dia = ("0" + fechaActual.getDate()).slice(-2);
 
 // Formatea la fecha en "yyyy/mm/dd"
-var fechaFormateada = año + "-" + mes + "-" + dia;
+const fechaFormateada = año + "-" + mes + "-" + dia;
 
 export default function AddForm() {
   const { taskList, addTask } = useTodoStore();
@@ -82,6 +80,13 @@ export default function AddForm() {
     setSubTasks([]);
   }
 
+  function removeSubtask(id: number) {
+    const updatedList = subTasks.filter(
+      (subtask: SubTask) => subtask.id !== id
+    );
+    setSubTasks(updatedList);
+  }
+
   return (
     <Modal>
       <form className="flex flex-col gap-3">
@@ -101,8 +106,14 @@ export default function AddForm() {
         <InputGroup>
           <FormLabel>SUBTAREAS</FormLabel>
           <div className="w-full min-h-20 bg-slate-100 rounded-[0.25rem] outline-[3px] outline-slate-200 p-3 py-4">
-            {subTasks?.map((t: any, i: number) => {
-              return <FormSubtask key={i} content={t.content} />;
+            {subTasks?.map((st: SubTask, i: number) => {
+              return (
+                <FormSubtask
+                  key={i}
+                  subtask={st}
+                  onRemoveSubtask={removeSubtask}
+                />
+              );
             })}
           </div>
         </InputGroup>
@@ -140,7 +151,7 @@ export default function AddForm() {
         </InputGroup>
         <div className="flex justify-end mt-3 gap-2">
           <ModalClose onClick={handleCancel} />
-          <ModalConfirm onClick={handleSubmit} />
+          <ModalAccept onClick={handleSubmit} label="Agregar" />
         </div>
       </form>
     </Modal>

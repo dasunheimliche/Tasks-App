@@ -9,22 +9,23 @@ import { useState } from "react";
 import Modal from "./ui/modal";
 import FormLabel from "./ui/form-label";
 import ModalClose from "./ui/modal-close";
-import ModalConfirm from "./ui/modal-confirm";
 import InputGroup from "./ui/input-group";
+import ModalAccept from "./ui/modal-accept";
 
 export default function EditDialog({ task }: { task: Task }) {
   const { updateTask } = useTodoStore();
 
   const [title, setTitle] = useState<string>(task.title);
-  const [subTasks] = useState<SubTask[]>(task.subtasks);
+  const [subTasks, setSubtasks] = useState<SubTask[]>(task.subtasks);
   const [deadline, setDeadline] = useState<string>(task.deadline);
 
   const [subtask, setSubtask] = useState<string>("");
 
   function handleAddSubtask() {
-    const task = {
+    const task: SubTask = {
       id: subTasks.length === 0 ? 0 : subTasks.length + 1,
       content: subtask,
+      checked: false,
     };
 
     subTasks.push(task);
@@ -47,12 +48,19 @@ export default function EditDialog({ task }: { task: Task }) {
     const newTask = {
       id: task.id,
       title,
-      state: "todo" as const,
+      state: task.state,
       deadline,
       subtasks: subTasks,
     };
 
     updateTask(task.id, newTask);
+  }
+
+  function handleRemoveSubtask(id: number) {
+    const updatedList = subTasks.filter(
+      (subtask: SubTask) => subtask.id !== id
+    );
+    setSubtasks(updatedList);
   }
 
   return (
@@ -73,8 +81,14 @@ export default function EditDialog({ task }: { task: Task }) {
         <InputGroup>
           <FormLabel>SUBTAREAS</FormLabel>
           <div className="w-full min-h-20 bg-slate-100 rounded-[0.25rem] outline-[3px] outline-slate-200 p-3 py-4">
-            {subTasks?.map((t: any, i: number) => {
-              return <FormSubtask key={i} content={t.content} />;
+            {subTasks?.map((st: SubTask, i: number) => {
+              return (
+                <FormSubtask
+                  key={i}
+                  subtask={st}
+                  onRemoveSubtask={handleRemoveSubtask}
+                />
+              );
             })}
           </div>
         </InputGroup>
@@ -111,7 +125,7 @@ export default function EditDialog({ task }: { task: Task }) {
         </InputGroup>
         <div className="flex justify-end mt-3 gap-2">
           <ModalClose />
-          <ModalConfirm onClick={handleSubmit} />
+          <ModalAccept onClick={handleSubmit} label="Confirmar" />
         </div>
       </form>
     </Modal>

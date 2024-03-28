@@ -6,7 +6,7 @@ import {
 } from "./ui/alert-dialog";
 
 import Modal from "./ui/modal";
-import ModalConfirm from "./ui/modal-confirm";
+import ModalAccept from "./ui/modal-accept";
 import ModalClose from "./ui/modal-close";
 
 export default function DeleteAlertDialog({
@@ -24,7 +24,7 @@ export default function DeleteAlertDialog({
       </AlertDialogHeader>
       <AlertDialogFooter>
         <ModalClose />
-        <ModalConfirm onClick={onClick} />
+        <ModalAccept onClick={onClick} label="Confirmar" />
       </AlertDialogFooter>
     </Modal>
   );

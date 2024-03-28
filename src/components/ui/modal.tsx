@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "../../lib/utils";
 import { AlertDialogContent } from "./alert-dialog";
 
 interface ModalProps extends React.ComponentProps<typeof AlertDialogContent> {

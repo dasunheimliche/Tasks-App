@@ -6,7 +6,7 @@ import {
 
 import Modal from "./ui/modal";
 import ModalClose from "./ui/modal-close";
-import ModalConfirm from "./ui/modal-confirm";
+import ModalAccept from "./ui/modal-accept";
 
 export default function DoneAlertDialog({
   onClick,
@@ -20,7 +20,7 @@ export default function DoneAlertDialog({
       </AlertDialogHeader>
       <AlertDialogFooter>
         <ModalClose />
-        <ModalConfirm onClick={onClick} />
+        <ModalAccept onClick={onClick} label="Confirmar" />
       </AlertDialogFooter>
     </Modal>
   );
