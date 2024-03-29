@@ -24,7 +24,7 @@ export default function TaskList({ state }: { state: TaskState }) {
   return (
     <ScrollArea
       className={cn(
-        "w-[33.6666666666%] max-sm:w-full m-0 flex flex-col px-3 mt-5 gap-3 border-l border-t border-zinc-200",
+        "w-[33.6666666666%] max-sm:w-full m-0 flex flex-col px-3 mt-0 gap-3 border-l border-t border-zinc-200",
         isSmallScreen ? selectedTaskState !== state && "hidden" : ""
       )}
       data-testid={state}

@@ -7,12 +7,12 @@ export default function StateTabs() {
   const isSmallScreen = useIsSmallScreen();
 
   return (
-    <ul className="flex justify-around items-center gap-6 h-12 px-5 font-semibold">
+    <ul className="flex justify-around items-center gap-6 h-12 px-5 font-semibold max-sm:text-[0.8rem]">
       <button
         className={cn("", isSmallScreen ? "" : "")}
         onClick={() => setSelectedTaskState("todo")}
       >
-        <li>Por hacer</li>
+        <li>Pendientes</li>
       </button>
       <button
         className={cn("", isSmallScreen ? "" : "")}
