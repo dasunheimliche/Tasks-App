@@ -31,6 +31,8 @@ export default function AddForm() {
 
   const [subtask, setSubtask] = useState<string>("");
 
+  console.log("DEADLINE: ", deadline);
+
   function handleAddSubtask() {
     if (subtask.length < 3) return;
 
@@ -57,7 +59,7 @@ export default function AddForm() {
 
   function handleSubmit() {
     if (!deadline) return;
-    if (subTasks.length < 1) return;
+    if (!title) return;
 
     const newTask = {
       id: taskList.length === 0 ? 1 : taskList[taskList.length - 1].id + 1,
@@ -68,15 +70,12 @@ export default function AddForm() {
     };
 
     addTask(newTask);
-
     setTitle("");
-    setDeadline("");
     setSubTasks([]);
   }
 
   function handleCancel() {
     setTitle("");
-    setDeadline("");
     setSubTasks([]);
   }
 
@@ -86,6 +85,8 @@ export default function AddForm() {
     );
     setSubTasks(updatedList);
   }
+
+  const isDisabled = !title || !deadline;
 
   return (
     <Modal>
@@ -151,7 +152,11 @@ export default function AddForm() {
         </InputGroup>
         <div className="flex justify-end mt-3 gap-2">
           <ModalClose onClick={handleCancel} />
-          <ModalAccept onClick={handleSubmit} label="Agregar" />
+          <ModalAccept
+            onClick={handleSubmit}
+            label="Agregar"
+            disabled={isDisabled}
+          />
         </div>
       </form>
     </Modal>

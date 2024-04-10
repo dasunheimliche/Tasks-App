@@ -7,7 +7,10 @@ interface ModalProps extends React.ComponentProps<typeof AlertDialogContent> {
 
 export default function Modal({ children, className, ...props }: ModalProps) {
   return (
-    <AlertDialogContent className={cn("w-96", className)} {...props}>
+    <AlertDialogContent
+      className={cn("w-96 max-sm:w-80 rounded-lg", className)}
+      {...props}
+    >
       {children}
     </AlertDialogContent>
   );

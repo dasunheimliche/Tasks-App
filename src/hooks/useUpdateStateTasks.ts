@@ -6,27 +6,18 @@ export default function useUpdateStateTasks() {
   const { taskList, updateTask } = useTodoStore();
 
   useEffect(() => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Establecer la hora a las 00:00:00
+
     taskList.forEach((task: Task) => {
       const deadline = new Date(task.deadline);
-      const today = new Date();
-      const isOverdue =
-        new Date(
-          deadline.getFullYear(),
-          deadline.getMonth(),
-          deadline.getDay()
-        ).getTime() >
-        new Date(
-          today.getFullYear(),
-          today.getMonth(),
-          today.getDay()
-        ).getTime() +
-          24 * 60 * 60 * 1000;
+      deadline.setHours(0, 0, 0, 0); // Establecer la hora a las 00:00:00
+      const extendedDeadline = new Date(deadline);
+      extendedDeadline.setDate(extendedDeadline.getDate() + 2); // Añadir 24 horas a deadline
 
-      if (isOverdue) {
-        const copy = { ...task };
-        copy.state = "overdue";
-        updateTask(task.id, copy);
+      if (today >= extendedDeadline && task.state !== "overdue") {
+        updateTask(task.id, { ...task, state: "overdue" });
       }
     });
-  }, []);
+  }, [taskList, updateTask]);
 }

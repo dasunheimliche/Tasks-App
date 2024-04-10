@@ -109,7 +109,7 @@ function TaskContainer({
   return (
     <AccordionItem
       value={`item-${id}`}
-      className="task max-w-full border border-zinc-300 rounded-md mb-2 bg-[#F0FBF7]"
+      className="task max-w-full rounded-md mb-2 bg-[#e4faf1] hover:bg-[#d7f8eb]"
     >
       {children}
     </AccordionItem>

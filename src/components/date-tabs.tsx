@@ -10,7 +10,7 @@ export default function DateTabs() {
 
   if (isSmallScreen)
     return (
-      <Carousel className="sm:pr-5">
+      <Carousel className="w-full relative sm:pr-5">
         <CarouselContent className="flex  items-center sm:justify-end sm:gap-1 max-sm:gap-7 h-16 pl-2">
           <CarouselItem className="max-sm:basis-1/5 sm:basis-1/12">
             <TabButton
@@ -103,7 +103,7 @@ function TabButton({ label, isSelected, ...props }: TabButtonProps) {
   return (
     <Button
       className={cn(
-        "font-semibold shadow-none rounded-[1.2rem]  w-[5.5rem] bg-[#F0FBF7] hover:bg-[#181A1F]  text-zinc-800 hover:text-zinc-50",
+        "font-semibold shadow-none rounded-[1.2rem]  w-[5.5rem] bg-[#d7f8eb] hover:bg-[#181A1F]  text-zinc-800 hover:text-zinc-50",
         isSelected && "bg-[#181A1F] text-slate-50"
       )}
       {...props}
